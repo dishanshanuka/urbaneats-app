@@ -1,0 +1,108 @@
+/* Container for the entire navbar */
+.navbar {
+  display: flex; /* Aligns logo, links, and right-side items in a row */
+  justify-content: space-between; /* Pushes sections to the far left, center, and right */
+  align-items: center; /* Centers all items vertically */
+  padding: 20px 4%; /* Adds vertical spacing and horizontal margin */
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Adds a subtle shadow under the navbar */
+}
+
+/* Styling for the Text-based Logo */
+.navbar-logo {
+  font-size: clamp(24px, 3vw, 32px); /* Responsive font size */
+  font-weight: 800; /* Makes the brand name bold */
+  cursor: pointer;
+}
+
+.logo-urban {
+  color: #2d2d2d; /* Dark Charcoal color */
+}
+
+.logo-eats {
+  color: #ff8c00; /* Vibrant Orange for the brand identity */
+}
+
+/* Navigation Menu Links */
+.navbar-links {
+  display: flex; /* Aligns Home, Menu, Contact in a row */
+  list-style: none; /* Removes bullet points */
+  gap: 30px; /* Spacing between each link */
+  font-size: 18px;
+  color: #495057;
+}
+
+.navbar-links li {
+  cursor: pointer;
+  transition: 0.3s; /* Smooth color change on hover */
+}
+
+.navbar-links li:hover {
+  color: #ff8c00; /* Changes to brand orange on hover */
+}
+
+/* Container for Search, Cart, and Login */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Consistent spacing between interactive elements */
+}
+
+.navbar-search-icon, .navbar-basket-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #495057;
+  position: relative;
+}
+
+/* The Notification Dot on the Cart icon */
+.navbar-basket-icon .dot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: #ff8c00;
+  border-radius: 50%; /* Makes the indicator a circle */
+  border: 2px solid white; /* Adds contrast against the icon */
+}
+
+/* Login Button Styling */
+.login-btn {
+  background-color: transparent;
+  color: #495057;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #ff8c00; /* Orange border */
+  padding: 8px 25px;
+  border-radius: 50px; /* Pill-shaped button */
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #fff4e5; /* Very light orange background on hover */
+}
+
+/* --- Add this at the bottom of Navbar.css --- */
+
+/* Style for the active menu item */
+.navbar-links li.active {
+  color: #ff8c00; /* Orange color when active */
+  border-bottom: 2px solid #ff8c00; /* Orange underline */
+  padding-bottom: 2px;
+}
+
+/* Base style for list items to ensure smooth transition */
+.navbar-links li {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent; /* Hidden border to prevent jumping */
+}
+
+/* Optional: Hover effect for non-active items */
+.navbar-links li:hover {
+  color: #ff8c00;
+}
