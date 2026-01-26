@@ -1,19 +1,22 @@
 import React from 'react'
-import Navbar from './components/Navbar/Navbar'
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import Cart from './pages/Cart/Cart'
-import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Cart from './pages/Cart'
+import PlaceOrder from './pages/PlaceOrder'
 
 const App = () => {
   return (
-    <div className='app'>
-      <Navbar/> 
-      <Routes>
-        < Route path='/' element={<Home/>} />
-        < Route path='/cart' element={<Cart/>} />
-        < Route path='/order' element={<PlaceOrder/>} />
-      </Routes>
+    <div className='min-h-screen bg-white'>
+      <Navbar /> 
+      
+      <div className='max-w-[90%] mx-auto'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/order' element={<PlaceOrder />} />
+        </Routes>
+      </div>
     </div>
   )
 }
