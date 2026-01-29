@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react' // Added useState for category selection
+import React, { useRef, useState } from 'react'
 import ExploreMenu from '../components/ExploreMenu'
+import FoodDisplay from '../components/FoodDisplay'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -53,7 +54,6 @@ const Home = () => {
           
           {/* Right Side: Animated Placeholder */}
           <div className="md:w-1/2 flex justify-center mt-10 md:mt-0 relative">
-              {/* Added 'floating-food' class for the continuous animation */}
               <div className="floating-food w-64 h-64 bg-orange-300 rounded-full blur-3xl opacity-20 absolute"></div>
               <div className="floating-food text-center relative z-10">
                 <p className="text-5xl mb-2">🍔 🥗</p>
@@ -65,8 +65,11 @@ const Home = () => {
         </div>
       </div>
       
-      {/* Passing category state to ExploreMenu component */}
+      {/* Category Selection Menu */}
       <ExploreMenu category={category} setCategory={setCategory} />
+
+      {/* Displaying Food items based on category */}
+      <FoodDisplay category={category} />
     </div>
   )
 }
