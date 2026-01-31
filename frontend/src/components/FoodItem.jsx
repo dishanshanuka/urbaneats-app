@@ -10,9 +10,12 @@ const FoodItem = ({ id, name, price, description, image }) => {
       <div className='relative'>
         <img src={image} alt={name} className='w-full h-48 object-cover' />
         
-        {/* Counter Overlay */}
+        {/* The 'id' here must match the '_id' from food_list */}
         {!cartItems[id] 
-          ? <button onClick={() => addToCart(id)} className='absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md text-orange-600 hover:scale-110 transition cursor-pointer'>
+          ? <button 
+              onClick={() => addToCart(id)} 
+              className='absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md text-orange-600 hover:scale-110 transition cursor-pointer'
+            >
               <FaPlus />
             </button>
           : <div className='absolute bottom-3 right-3 flex items-center gap-3 bg-white p-2 rounded-full shadow-md'>
