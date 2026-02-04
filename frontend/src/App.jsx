@@ -6,6 +6,8 @@ import Cart from './pages/Cart'
 import Footer from './components/Footer'
 import PlaceOrder from './pages/PlaceOrder'
 import LoginPopup from './components/LoginPopup'
+import AdminDashboard from './pages/AdminDashboard'
+
 
 const App = () => {
  
@@ -25,6 +27,7 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/order' element={<PlaceOrder />} />
+            <Route path='/admin' element={<AdminDashboard/>} />
           </Routes>
         </div>
         <Footer />
