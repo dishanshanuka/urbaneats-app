@@ -5,15 +5,18 @@ import { Routes, Route } from 'react-router-dom'
 import Add from './pages/Add'
 import List from './pages/List'
 import Orders from './pages/Orders'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <div>
+      <ToastContainer />
       <Navbar />
       <hr />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 p-8 bg-gray-50">
+        <div className="flex-1 p-8">
           <Routes>
             <Route path="/add" element={<Add />} />
             <Route path="/list" element={<List />} />
