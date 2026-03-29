@@ -7,6 +7,8 @@ import Footer from './components/Footer'
 import PlaceOrder from './pages/PlaceOrder'
 import LoginPopup from './components/LoginPopup'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
  
@@ -14,7 +16,8 @@ const App = () => {
 
   return (
     <>
-     
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      
       {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
       
       <div className='min-h-screen bg-white'>

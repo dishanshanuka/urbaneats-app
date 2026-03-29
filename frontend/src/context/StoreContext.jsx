@@ -4,6 +4,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
+    const url = "http://localhost:4000";
+    const [token, setToken] = useState(null);
 
     const food_list = [
         { _id: "1", name: "Greek Salad", image: "https://images.pexels.com/photos/406152/pexels-photo-406152.jpeg", price: 12, description: "Fresh and healthy greens with olives", category: "Salad" },
@@ -50,7 +52,10 @@ const StoreContextProvider = (props) => {
         setCartItems,
         addToCart,
         removeFromCart,
-        getTotalCartAmount
+        getTotalCartAmount,
+        url,
+        token,
+        setToken
     };
 
     return (
