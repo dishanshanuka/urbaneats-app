@@ -3,14 +3,14 @@ import { StoreContext } from '../context/StoreContext'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 
 const FoodItem = ({ id, name, price, description, image }) => {
-  // 1. url එකත් Context එකෙන් ලබාගන්න
+  
   const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
 
   return (
     <div className='rounded-2xl shadow-md bg-white overflow-hidden border border-gray-100 hover:shadow-xl transition-all relative'>
       <div className='relative'>
         
-        {/* 2. පින්තූරයේ src එක මේ විදිහට වෙනස් කරන්න */}
+        
         <img 
           src={url + "/images/" + image} 
           alt={name} 
@@ -37,7 +37,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
         <p className='text-gray-500 text-sm my-2 leading-relaxed'>{description}</p>
         <div className='flex justify-between items-center'>
             <p className='text-orange-600 text-xl font-bold'>${price}</p>
-            {/* මෙතනට ඕනේ නම් කෑම වර්ගය (Category) පෙන්වන badge එකක් දාන්න පුළුවන් */}
+            
         </div>
       </div>
     </div>

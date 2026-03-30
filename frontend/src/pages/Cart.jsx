@@ -3,7 +3,7 @@ import { StoreContext } from '../context/StoreContext'
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  // 1. url එකත් context එකෙන් ලබාගන්න
+  // 1 get cartItems, food_list, removeFromCart, getTotalCartAmount, url from StoreContext
   const { cartItems, food_list, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Cart = () => {
                 return (
                   <div key={index} className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-sm py-4 border-b px-2 hover:bg-gray-50 transition'>
                     
-                    {/* 2. පින්තූරයේ src එක Backend URL එකට අනුව වෙනස් කළා */}
+                    
                     <img src={url + "/images/" + item.image} alt={item.name} className='w-12 h-12 object-cover rounded' />
                     
                     <p className='font-medium text-gray-800'>{item.name}</p>

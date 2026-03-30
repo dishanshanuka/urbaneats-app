@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios"; // axios import කරන්න අමතක කරන්න එපා
+import axios from "axios"; 
 
 export const StoreContext = createContext(null);
 
@@ -7,16 +7,23 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const url = "http://localhost:4000";
     const [token, setToken] = useState("");
-    const [food_list, setFoodList] = useState([]); // මෙතන Typo එක (stFoodList) හරිගැස්සුවා
+    const [food_list, setFoodList] = useState([]);
 
-    const addToCart = (itemId) => {
-        setCartItems((prev) => ({
-            ...prev,
-            [itemId]: (prev[itemId] || 0) + 1
-        }));
+    // 1. Add to Cart with Backend Integration
+    const addToCart = async (itemId) => {
+        if (!cartItems[itemId]) {
+            setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+        } else {
+            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+        }
+        
+        if (token) {
+            await axios.post(url + "/api/cart/add", { itemId }, { headers: { token } });
+        }
     };
 
-    const removeFromCart = (itemId) => {
+    // 2. Remove from Cart with Backend Integration
+    const removeFromCart = async (itemId) => {
         setCartItems((prev) => {
             const newCount = (prev[itemId] || 0) - 1;
             if (newCount <= 0) {
@@ -25,6 +32,11 @@ const StoreContextProvider = (props) => {
             }
             return { ...prev, [itemId]: newCount };
         });
+
+        
+        if (token) {
+            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
+        }
     };
 
     const getTotalCartAmount = () => {
@@ -40,18 +52,24 @@ const StoreContextProvider = (props) => {
         return totalAmount;
     };
 
-    // 1. Database එකෙන් කෑම ලිස්ට් එක ගෙන්නගන්නා function එක
     const fetchFoodList = async () => {
         const response = await axios.get(url + "/api/food/list");
         setFoodList(response.data.data);
     }
 
-    // 2. පේජ් එක load වෙද්දීම දත්ත ගෙන්නගන්නා useEffect එක
+    // 3. save Cart Data to Backend when token changes (User logs in)
+    const loadCartData = async (token) => {
+        const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+        setCartItems(response.data.cartData);
+    }
+
     useEffect(() => {
         async function loadData() {
             await fetchFoodList();
             if (localStorage.getItem("token")) {
-                setToken(localStorage.getItem("token"));
+                const storedToken = localStorage.getItem("token");
+                setToken(storedToken);
+                await loadCartData(storedToken);
             }
         }
         loadData();
