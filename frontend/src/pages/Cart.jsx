@@ -3,16 +3,15 @@ import { StoreContext } from '../context/StoreContext'
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount } = useContext(StoreContext);
+  // 1. url එකත් context එකෙන් ලබාගන්න
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext);
   const navigate = useNavigate();
 
   return (
     <div className='mt-24 mb-20'>
       <div className='max-w-7xl mx-auto px-4'>
         
-        {/* Cart Items Table Container */}
         <div className="overflow-x-auto">
-          {/* We set a min-width so the table doesn't squash on mobile */}
           <div className="min-w-[700px]">
             <div className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-gray-500 text-sm border-b pb-2 px-2'>
               <p>Items</p>
@@ -26,7 +25,10 @@ const Cart = () => {
               if (cartItems[item._id] > 0) {
                 return (
                   <div key={index} className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-sm py-4 border-b px-2 hover:bg-gray-50 transition'>
-                    <img src={item.image} alt="" className='w-12 h-12 object-cover rounded' />
+                    
+                    {/* 2. පින්තූරයේ src එක Backend URL එකට අනුව වෙනස් කළා */}
+                    <img src={url + "/images/" + item.image} alt={item.name} className='w-12 h-12 object-cover rounded' />
+                    
                     <p className='font-medium text-gray-800'>{item.name}</p>
                     <p>${item.price}</p>
                     <p className='bg-gray-100 w-8 h-8 flex items-center justify-center rounded'>{cartItems[item._id]}</p>
@@ -40,10 +42,8 @@ const Cart = () => {
           </div>
         </div>
 
-        {/* Cart Bottom Section - Changes from column to row on md screens */}
         <div className='mt-20 flex flex-col-reverse md:flex-row justify-between gap-12'>
           
-          {/* Totals Section */}
           <div className='flex-1 flex flex-col gap-5'>
             <h2 className='text-2xl font-bold text-gray-800'>Cart Totals</h2>
             <div className='space-y-3'>
@@ -70,7 +70,6 @@ const Cart = () => {
             </button>
           </div>
 
-          {/* Promo Code Section */}
           <div className='flex-1'>
             <p className='text-gray-500 text-sm'>If you have a promo code, Enter it here</p>
             <div className='mt-3 flex items-center bg-gray-100 rounded overflow-hidden'>

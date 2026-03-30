@@ -1,19 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios"; // axios import කරන්න අමතක කරන්න එපා
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const url = "http://localhost:4000";
-    const [token, setToken] = useState(null);
-
-    const food_list = [
-        { _id: "1", name: "Greek Salad", image: "https://images.pexels.com/photos/406152/pexels-photo-406152.jpeg", price: 12, description: "Fresh and healthy greens with olives", category: "Salad" },
-        { _id: "2", name: "Veggie Roll", image: "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg", price: 15, description: "Crispy rolls with fresh vegetables", category: "Rolls" },
-        { _id: "3", name: "Chocolate Cake", image: "https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg", price: 25, description: "Rich chocolate cake for your sweet tooth", category: "Cake" },
-        { _id: "4", name: "Pasta Alfredo", image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg", price: 18, description: "Creamy pasta with parmesan cheese", category: "Pasta" },
-        { _id: "5", name: "Fruit Desert", image: "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg", price: 10, description: "Sweet deserts with fresh fruits", category: "Deserts" }
-    ];
+    const [token, setToken] = useState("");
+    const [food_list, setFoodList] = useState([]); // මෙතන Typo එක (stFoodList) හරිගැස්සුවා
 
     const addToCart = (itemId) => {
         setCartItems((prev) => ({
@@ -45,6 +39,23 @@ const StoreContextProvider = (props) => {
         }
         return totalAmount;
     };
+
+    // 1. Database එකෙන් කෑම ලිස්ට් එක ගෙන්නගන්නා function එක
+    const fetchFoodList = async () => {
+        const response = await axios.get(url + "/api/food/list");
+        setFoodList(response.data.data);
+    }
+
+    // 2. පේජ් එක load වෙද්දීම දත්ත ගෙන්නගන්නා useEffect එක
+    useEffect(() => {
+        async function loadData() {
+            await fetchFoodList();
+            if (localStorage.getItem("token")) {
+                setToken(localStorage.getItem("token"));
+            }
+        }
+        loadData();
+    }, [])
 
     const contextValue = {
         food_list,
