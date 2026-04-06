@@ -8,7 +8,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='mt-24 mb-20'>
+    <div className='mt-40 mb-20'> 
       <div className='max-w-7xl mx-auto px-4'>
         
         <div className="overflow-x-auto">
@@ -25,7 +25,6 @@ const Cart = () => {
               if (cartItems[item._id] > 0) {
                 return (
                   <div key={index} className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-sm py-4 border-b px-2 hover:bg-gray-50 transition'>
-                    
                     
                     <img src={url + "/images/" + item.image} alt={item.name} className='w-12 h-12 object-cover rounded' />
                     
