@@ -15,13 +15,20 @@
   }
 }
 
-/* මුළු පිටුවේම දෙපැත්තේ ඉඩ ඉවත් කිරීමට සහ Smooth scroll සඳහා මෙය එක් කරන්න */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
     @apply m-0 p-0 overflow-x-hidden;
-    font-family: 'Outfit', sans-serif; /* UrbanEats වලට ගැලපෙන font එකක් */
+    font-family: 'Outfit', sans-serif;
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
