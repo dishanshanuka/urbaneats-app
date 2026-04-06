@@ -8,6 +8,9 @@ const StoreContextProvider = (props) => {
     const url = "http://localhost:4000";
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
+    
+    // --- මෙන්න මේ අලුත් State එක එකතු කරන්න ---
+    const [search, setSearch] = useState(""); 
 
     // 1. Add to Cart with Backend Integration
     const addToCart = async (itemId) => {
@@ -33,7 +36,6 @@ const StoreContextProvider = (props) => {
             return { ...prev, [itemId]: newCount };
         });
 
-        
         if (token) {
             await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
         }
@@ -57,7 +59,6 @@ const StoreContextProvider = (props) => {
         setFoodList(response.data.data);
     }
 
-    // 3. save Cart Data to Backend when token changes (User logs in)
     const loadCartData = async (token) => {
         const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
         setCartItems(response.data.cartData);
@@ -84,7 +85,10 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        // --- මෙන්න මේ දෙකත් contextValue එකට ඇතුළත් කරන්න ---
+        search,
+        setSearch
     };
 
     return (

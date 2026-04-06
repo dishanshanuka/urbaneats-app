@@ -1,8 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { IoMdAddCircleOutline } from "react-icons/io"; // Add icon
-import { MdFormatListBulleted } from "react-icons/md"; // List icon
-import { HiOutlineClipboardList } from "react-icons/hi"; // Orders icon
+import { IoMdAddCircleOutline } from "react-icons/io"; 
+import { MdFormatListBulleted } from "react-icons/md"; 
+import { HiOutlineClipboardList } from "react-icons/hi";
 
 const Sidebar = () => {
   return (

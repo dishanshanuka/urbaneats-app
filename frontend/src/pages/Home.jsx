@@ -40,10 +40,8 @@ const Home = () => {
             className="hero-bg w-full h-full object-cover"
           />
           
-          {/* 1. Navbar එක පැහැදිලිව පෙනීමට ඉහළ සිට එන අඳුරු Gradient එක (Top Shadow) */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-transparent h-[40%]"></div>
 
-          {/* 2. අකුරු පෙනීමට වම් පැත්තේ සිට එන අඳුරු Gradient එක (Left Shadow) */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent"></div>
         </div>
 
@@ -74,7 +72,6 @@ const Home = () => {
       </div>
       {/* --- HERO SECTION END --- */}
 
-      {/* පහළ කොටස් සඳහා පමණක් max-width container එකක් භාවිතා කර ඇත */}
       <div className="max-w-7xl mx-auto px-4 mt-16">
         <ExploreMenu category={category} setCategory={setCategory} />
         <FoodDisplay category={category} />

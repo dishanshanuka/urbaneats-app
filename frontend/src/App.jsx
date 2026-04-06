@@ -20,19 +20,13 @@ const App = () => {
       
       {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
       
-      {/* 1. මෙතන 'max-w-[90%]' එක අයින් කරලා 'w-full' කරන්න */}
       <div className='min-h-screen bg-white w-full overflow-x-hidden'>
       
         <Navbar setShowLogin={setShowLogin} /> 
         
-        {/* 2. Routes තියෙන div එකේ container එක අයින් කරන්න. 
-           අපි ඒක ඒ ඒ Page එක ඇතුළතදී පාලනය කරමු. */}
         <div>
           <Routes>
             <Route path='/' element={<Home />} />
-            
-            {/* අනිත් පිටු සඳහා වෙනම container එකක් අවශ්‍ය නම් 
-               ඒවා ඒ Page එක ඇතුළත 'max-w-[90%] mx-auto' ලෙස දාන්න */}
             <Route path='/cart' element={<Cart />} />
             <Route path='/order' element={<PlaceOrder />} />
             <Route path='/verify' element={<Verify />} />
