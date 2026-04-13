@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { FiTrash2, FiTag, FiDollarSign } from 'react-icons/fi'
+import { FiTrash2, FiTag } from 'react-icons/fi'
 
 const List = () => {
 
@@ -92,10 +92,11 @@ const List = () => {
                     </span>
                   </div>
 
-                  {/* Price */}
+                  {/* Price Section Updated for LKR */}
                   <div className='flex justify-center'>
                     <p className='flex items-center gap-1 font-black text-gray-900 text-lg tracking-tighter'>
-                      <span className='text-orange-600 text-sm'>$</span>{item.price}
+                      <span className='text-orange-600 text-[10px] font-black mr-0.5'>LKR</span>
+                      {Number(item.price).toLocaleString()}
                     </p>
                   </div>
 

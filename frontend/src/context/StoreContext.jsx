@@ -9,7 +9,6 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
     
-    // --- මෙන්න මේ අලුත් State එක එකතු කරන්න ---
     const [search, setSearch] = useState(""); 
 
     // 1. Add to Cart with Backend Integration
@@ -86,7 +85,6 @@ const StoreContextProvider = (props) => {
         url,
         token,
         setToken,
-        // --- මෙන්න මේ දෙකත් contextValue එකට ඇතුළත් කරන්න ---
         search,
         setSearch
     };
