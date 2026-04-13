@@ -5,24 +5,20 @@ import axios from 'axios';
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext);
 
-  // 1. save delivery information to state
   const [data, setData] = useState({
     firstName: "", lastName: "", email: "", street: "",
     city: "", state: "", zipcode: "", country: "", phone: ""
   })
 
-  // 2. update delivery information state when user types in the form
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData(data => ({ ...data, [name]: value }))
   }
 
-  // 3. place order when user submits the form
   const placeOrder = async (event) => {
     event.preventDefault();
     
-    // get cart items from cartItems state and prepare order data to send to backend
     let orderItems = [];
     food_list.map((item) => {
       if (cartItems[item._id] > 0) {
@@ -35,11 +31,10 @@ const PlaceOrder = () => {
     let orderData = {
       address: data,
       items: orderItems,
-      amount: getTotalCartAmount() + 2,
+      amount: getTotalCartAmount() + 350,
     }
 
     try {
-      // send order data to backend to create order and get Stripe checkout session URL
       let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
       if (response.data.success) {
         const { session_url } = response.data;
@@ -54,56 +49,63 @@ const PlaceOrder = () => {
   }
 
   return (
-    <form onSubmit={placeOrder} className='flex flex-col lg:flex-row items-start justify-between gap-12 mt-12 md:mt-24 mb-20 max-w-7xl mx-auto px-4'>
+    <form onSubmit={placeOrder} className='flex flex-col lg:flex-row items-start justify-between gap-12 mt-32 md:mt-40 mb-20 max-w-7xl mx-auto px-6 font-sans'>
       
       {/* Left Side: Delivery Information */}
-      <div className='w-full lg:max-w-[max(30%,500px)]'>
-        <p className='text-2xl md:text-3xl font-bold mb-8 text-gray-800 text-center lg:text-left'>
-            Delivery Information
-        </p>
+      <div className='w-full lg:max-w-[550px]'>
+        <div className='mb-10'>
+            <h2 className='text-3xl font-black text-gray-900 uppercase tracking-tighter'>
+                Delivery <span className='text-orange-600'>Information</span>
+            </h2>
+            <div className='w-20 h-1.5 bg-orange-600 mt-2 rounded-full'></div>
+        </div>
         
-        <div className='flex flex-col sm:flex-row gap-3 mb-4'>
-          <input required name='firstName' onChange={onChangeHandler} value={data.firstName} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='First name' />
-          <input required name='lastName' onChange={onChangeHandler} value={data.lastName} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='Last name' />
-        </div>
+        <div className='flex flex-col gap-4'>
+            <div className='flex flex-col sm:flex-row gap-4'>
+                <input required name='firstName' onChange={onChangeHandler} value={data.firstName} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='FIRST NAME' />
+                <input required name='lastName' onChange={onChangeHandler} value={data.lastName} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='LAST NAME' />
+            </div>
 
-        <input required name='email' onChange={onChangeHandler} value={data.email} className='w-full border border-gray-300 p-3 rounded outline-orange-600 mb-4' type="email" placeholder='Email address' />
-        <input required name='street' onChange={onChangeHandler} value={data.street} className='w-full border border-gray-300 p-3 rounded outline-orange-600 mb-4' type="text" placeholder='Street' />
-        
-        <div className='flex flex-col sm:flex-row gap-3 mb-4'>
-          <input required name='city' onChange={onChangeHandler} value={data.city} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='City' />
-          <input required name='state' onChange={onChangeHandler} value={data.state} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='State' />
-        </div>
+            <input required name='email' onChange={onChangeHandler} value={data.email} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="email" placeholder='EMAIL ADDRESS' />
+            <input required name='street' onChange={onChangeHandler} value={data.street} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STREET' />
+            
+            <div className='flex flex-col sm:flex-row gap-4'>
+                <input required name='city' onChange={onChangeHandler} value={data.city} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='CITY' />
+                <input required name='state' onChange={onChangeHandler} value={data.state} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STATE / PROVINCE' />
+            </div>
 
-        <div className='flex flex-col sm:flex-row gap-3 mb-4'>
-          <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='Zip code' />
-          <input required name='country' onChange={onChangeHandler} value={data.country} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='Country' />
-        </div>
+            <div className='flex flex-col sm:flex-row gap-4'>
+                <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='ZIP CODE' />
+                <input required name='country' onChange={onChangeHandler} value={data.country} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='COUNTRY' />
+            </div>
 
-        <input required name='phone' onChange={onChangeHandler} value={data.phone} className='w-full border border-gray-300 p-3 rounded outline-orange-600' type="text" placeholder='Phone' />
+            <input required name='phone' onChange={onChangeHandler} value={data.phone} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='PHONE NUMBER' />
+        </div>
       </div>
 
       {/* Right Side: Cart Totals */}
-      <div className='w-full lg:max-w-[40%]'>
-        <div className='flex flex-col gap-5 bg-gray-50 p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100'>
-          <h2 className='text-2xl font-bold text-gray-800'>Cart Totals</h2>
-          <div className='space-y-3'>
-            <div className='flex justify-between text-gray-600'>
+      <div className='w-full lg:max-w-[420px]'>
+        <div className='flex flex-col gap-6 bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-100/50'>
+          <h2 className='text-2xl font-black text-gray-900 uppercase tracking-tighter'>Summary</h2>
+          
+          <div className='space-y-4'>
+            <div className='flex justify-between text-gray-400 font-bold uppercase text-[11px] tracking-widest'>
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>LKR {getTotalCartAmount().toLocaleString()}</p>
             </div>
-            <hr />
-            <div className='flex justify-between text-gray-600'>
+            <hr className='border-gray-50' />
+            <div className='flex justify-between text-gray-400 font-bold uppercase text-[11px] tracking-widest'>
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+              <p>LKR {getTotalCartAmount() === 0 ? 0 : 350}</p>
             </div>
-            <hr />
-            <div className='flex justify-between text-lg font-bold text-gray-800'>
-              <b>Total</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+            <hr className='border-gray-200 shadow-sm' />
+            <div className='flex justify-between text-xl font-black text-gray-900 uppercase tracking-tighter pt-2'>
+              <p>Total</p>
+              <p className='text-orange-600'>LKR {(getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 350).toLocaleString()}</p>
             </div>
           </div>
-          <button type='submit' className='bg-orange-600 text-white w-full py-3 rounded font-bold hover:bg-orange-700 transition active:scale-95 mt-5 shadow-md'>
+
+          <button type='submit' className='bg-orange-600 text-white w-full py-5 rounded-[1.5rem] font-black uppercase tracking-widest hover:bg-black transition-all active:scale-95 mt-6 shadow-xl shadow-orange-100 text-xs'>
             PROCEED TO PAYMENT
           </button>
         </div>

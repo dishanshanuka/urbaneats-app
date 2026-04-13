@@ -21,8 +21,10 @@ const placeOrder = async (req, res) => {
         const line_items = req.body.items.map((item) => ({
             price_data: {
                 currency: "lkr",
-                product_data: { name: item.name },
-                unit_amount: item.price * 100 * 320 
+                product_data: { 
+                    name: item.name 
+                },
+                unit_amount: item.price * 100 
             },
             quantity: item.quantity
         }))
@@ -30,8 +32,10 @@ const placeOrder = async (req, res) => {
         line_items.push({
             price_data: {
                 currency: "lkr",
-                product_data: { name: "Delivery Charges" },
-                unit_amount: 2 * 100 * 320
+                product_data: { 
+                    name: "Delivery Charges" 
+                },
+                unit_amount: 350 * 100 
             },
             quantity: 1
         })
@@ -47,11 +51,11 @@ const placeOrder = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" })
+        res.json({ success: false, message: "Error occurred while placing order" })
     }
 }
 
-// 2. Payment Verification for User Orders after Payment is done in Stripe
+// 2. Payment Verification after Stripe checkout
 const verifyOrder = async (req, res) => {
     const { orderId, success } = req.body;
     try {
@@ -68,7 +72,7 @@ const verifyOrder = async (req, res) => {
     }
 }
 
-// 3. Get User Orders for Frontend
+// 3. Get Individual User Orders
 const userOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({ userId: req.body.userId });
@@ -79,7 +83,7 @@ const userOrders = async (req, res) => {
     }
 }
 
-// 4. Listing Orders for Admin Panel
+// 4. Listing All Orders for Admin Panel
 const listOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({});
@@ -90,7 +94,7 @@ const listOrders = async (req, res) => {
     }
 }
 
-// 5. Updating Order Status from Admin Panel
+// 5. Updating Order Status (e.g., Food Processing -> Out for Delivery)
 const updateStatus = async (req, res) => {
     try {
         await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });

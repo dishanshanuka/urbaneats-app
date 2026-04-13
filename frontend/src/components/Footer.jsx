@@ -3,7 +3,8 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 text-gray-800 pt-16 pb-8 px-4 border-t border-gray-200 mt-20">
+    // මෙන්න මෙතනට id="footer" විතරක් ඇඩ් කළා
+    <footer id="footer" className="bg-gray-50 text-gray-800 pt-16 pb-8 px-4 border-t border-gray-200 mt-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         
         {/* Brand Section */}
@@ -12,7 +13,7 @@ const Footer = () => {
             Urban<span className="text-gray-900">Eats</span>
           </h2>
           <p className="text-gray-600 text-sm leading-relaxed">
-            Step into style with the best sneakers in town. We bring quality and comfort straight to your doorstep.
+            Experience culinary excellence delivered to your doorstep. We bring the finest flavors from our kitchen straight to your table with speed and care.
           </p>
           <div className="flex space-x-5">
             <FaFacebook className="text-xl cursor-pointer hover:text-orange-600 transition-colors" />
@@ -36,9 +37,7 @@ const Footer = () => {
           <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">Support</h3>
           <ul className="space-y-3 text-gray-600 text-sm">
             <li><a href="#" className="hover:text-orange-600 transition">Order Tracking</a></li>
-            <li><a href="#" className="hover:text-orange-600 transition">Return Policy</a></li>
             <li><a href="#" className="hover:text-orange-600 transition">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-orange-600 transition">Terms of Service</a></li>
           </ul>
         </div>
 

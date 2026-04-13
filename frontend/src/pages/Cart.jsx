@@ -3,7 +3,6 @@ import { StoreContext } from '../context/StoreContext'
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  // 1 get cartItems, food_list, removeFromCart, getTotalCartAmount, url from StoreContext
   const { cartItems, food_list, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -13,7 +12,8 @@ const Cart = () => {
         
         <div className="overflow-x-auto">
           <div className="min-w-[700px]">
-            <div className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-gray-500 text-sm border-b pb-2 px-2'>
+            {/* Header */}
+            <div className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-gray-500 text-[11px] font-black uppercase tracking-widest border-b pb-4 px-2'>
               <p>Items</p>
               <p>Title</p>
               <p>Price</p>
@@ -21,18 +21,18 @@ const Cart = () => {
               <p>Total</p>
               <p>Remove</p>
             </div>
+
+            {/* Backend Data Rendering */}
             {food_list.map((item, index) => {
               if (cartItems[item._id] > 0) {
                 return (
-                  <div key={index} className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-sm py-4 border-b px-2 hover:bg-gray-50 transition'>
-                    
-                    <img src={url + "/images/" + item.image} alt={item.name} className='w-12 h-12 object-cover rounded' />
-                    
-                    <p className='font-medium text-gray-800'>{item.name}</p>
-                    <p>${item.price}</p>
-                    <p className='bg-gray-100 w-8 h-8 flex items-center justify-center rounded'>{cartItems[item._id]}</p>
-                    <p className='font-bold'>${item.price * cartItems[item._id]}</p>
-                    <p onClick={() => removeFromCart(item._id)} className='cursor-pointer text-red-500 font-bold hover:scale-125 transition w-fit px-2'>x</p>
+                  <div key={index} className='grid grid-cols-[1fr_2fr_1fr_1fr_1fr_0.5fr] items-center text-sm py-6 border-b px-2 hover:bg-gray-50 transition border-gray-100'>
+                    <img src={url + "/images/" + item.image} alt={item.name} className='w-16 h-16 object-cover rounded-xl shadow-sm border border-gray-100' />
+                    <p className='font-black text-gray-900 uppercase tracking-tight'>{item.name}</p>
+                    <p className='font-bold text-gray-600'>LKR {item.price.toLocaleString()}</p>
+                    <p className='bg-orange-50 text-orange-600 w-10 h-10 flex items-center justify-center rounded-xl font-black'>{cartItems[item._id]}</p>
+                    <p className='font-black text-gray-900'>LKR {(item.price * cartItems[item._id]).toLocaleString()}</p>
+                    <p onClick={() => removeFromCart(item._id)} className='cursor-pointer text-red-500 font-black hover:scale-125 transition w-fit px-2'>x</p>
                   </div>
                 )
               }
@@ -41,43 +41,41 @@ const Cart = () => {
           </div>
         </div>
 
-        <div className='mt-20 flex flex-col-reverse md:flex-row justify-between gap-12'>
-          
-          <div className='flex-1 flex flex-col gap-5'>
-            <h2 className='text-2xl font-bold text-gray-800'>Cart Totals</h2>
-            <div className='space-y-3'>
-              <div className='flex justify-between text-gray-600'>
+        {/* Totals Section */}
+        <div className='mt-24 flex flex-col-reverse md:flex-row justify-between gap-12'>
+          <div className='flex-1 flex flex-col gap-6 bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm'>
+            <h2 className='text-2xl font-black text-gray-900 uppercase tracking-tighter'>Cart Totals</h2>
+            <div className='space-y-4 font-bold'>
+              <div className='flex justify-between text-gray-500 uppercase text-xs tracking-wider'>
                 <p>Subtotal</p>
-                <p>${getTotalCartAmount()}</p>
+                <p>LKR {getTotalCartAmount().toLocaleString()}</p>
               </div>
-              <hr />
-              <div className='flex justify-between text-gray-600'>
+              <hr className='border-gray-50' />
+              <div className='flex justify-between text-gray-500 uppercase text-xs tracking-wider'>
                 <p>Delivery Fee</p>
-                <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+                <p>LKR {getTotalCartAmount() === 0 ? 0 : 350}</p>
               </div>
-              <hr />
-              <div className='flex justify-between text-lg font-bold text-gray-800'>
-                <b>Total</b>
-                <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+              <hr className='border-gray-200' />
+              <div className='flex justify-between text-xl font-black text-gray-900 uppercase tracking-tighter'>
+                <p>Total</p>
+                <p className='text-orange-600'>LKR {getTotalCartAmount() === 0 ? 0 : (getTotalCartAmount() + 350).toLocaleString()}</p>
               </div>
             </div>
-            <button 
-              onClick={() => navigate('/order')} 
-              className='bg-orange-600 text-white w-full md:w-64 py-3 rounded font-bold hover:bg-orange-700 transition active:scale-95 mt-5 shadow-md'
-            >
+            <button onClick={() => navigate('/order')} className='bg-orange-600 text-white w-full py-4 rounded-2xl font-black hover:bg-black transition-all active:scale-95 shadow-xl shadow-orange-100 uppercase tracking-widest text-[11px]'>
               PROCEED TO CHECKOUT
             </button>
           </div>
 
-          <div className='flex-1'>
-            <p className='text-gray-500 text-sm'>If you have a promo code, Enter it here</p>
-            <div className='mt-3 flex items-center bg-gray-100 rounded overflow-hidden'>
-              <input type="text" placeholder='promo code' className='bg-transparent border-none outline-none px-4 py-3 flex-1' />
-              <button className='bg-gray-800 text-white px-6 md:px-10 py-3 hover:bg-black transition'>Submit</button>
+          {/* Promo Code */}
+          <div className='flex-1 lg:pl-20'>
+            <p className='text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4'>Promo Code</p>
+            <div className='flex items-center bg-gray-50 rounded-2xl border border-gray-100 p-1.5 focus-within:border-orange-200 transition-all'>
+              <input type="text" placeholder='ENTER CODE' className='bg-transparent border-none outline-none px-6 py-3 flex-1 text-xs font-black tracking-widest' />
+              <button className='bg-black text-white px-8 py-4 rounded-xl hover:bg-orange-600 transition font-black text-[10px] uppercase tracking-widest'>Submit</button>
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
   )

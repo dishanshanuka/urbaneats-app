@@ -13,13 +13,13 @@ const App = () => {
   const url = "http://localhost:4000";
 
   return (
-    <div>
+    <div className='min-h-screen bg-[#fcfcfc] overflow-x-hidden'>
       <ToastContainer />
       <Navbar />
-      <hr />
+      <hr className='border-gray-100' />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-5 md:p-10 overflow-x-hidden">
           <Routes>
             <Route path="/add" element={<Add url={url} />} />
             <Route path="/list" element={<List url={url} />} />
