@@ -70,6 +70,46 @@ const FoodDisplay = ({ category }) => {
       price: 1100, 
       description: "Rich chocolate mousse with dark chocolate glaze.", 
       category: "Deserts" 
+    },
+    {
+      _id: "s9",
+      name: "Classic Pepperoni Pizza",
+      image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1000&auto=format&fit=crop",
+      price: 3250,
+      description: "Crispy crust topped with zesty tomato sauce, melted mozzarella, and spicy pepperoni.",
+      category: "Pizza"
+    },
+    {
+      _id: "s10",
+      name: "Double Cheese Burger",
+      image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1000&auto=format&fit=crop",
+      price: 1850,
+      description: "Juicy double beef patty with melted cheddar, fresh lettuce, and our secret Urban sauce.",
+      category: "Sandwich"
+    },
+    {
+      _id: "s11",
+      name: "Creamy White Pasta",
+      image: "https://images.unsplash.com/photo-1645112481338-3014556272b7?q=80&w=1000&auto=format&fit=crop",
+      price: 2100,
+      description: "Rich and creamy Alfredo sauce with mushrooms, parmesan cheese, and garlic herbs.",
+      category: "Pasta"
+    },
+    {
+      _id: "s12",
+      name: "Chocolate Lava Cake",
+      image: "https://images.unsplash.com/photo-1624353335560-b4a958ceca55?q=80&w=1000&auto=format&fit=crop",
+      price: 950,
+      description: "Decadent dark chocolate cake with a warm, gooey molten center. A true sweet delight.",
+      category: "Cake"
+    },
+    {
+      _id: "s13",
+      name: "Crispy Chicken Rolls",
+      image: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1000&auto=format&fit=crop",
+      price: 750,
+      description: "Golden fried rolls filled with seasoned shredded chicken and spicy vegetables.",
+      category: "Rolls"
     }
   ];
 
@@ -84,8 +124,10 @@ const FoodDisplay = ({ category }) => {
       
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8'>
         {display_list.map((item, index) => {
+          if (!item || !item.name) return null;
+
           const matchesCategory = category === "All" || category === item.category;
-          const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+          const matchesSearch = item.name.toLowerCase().includes((search || "").toLowerCase());
 
           if (matchesCategory && matchesSearch) {
             return (
@@ -105,8 +147,9 @@ const FoodDisplay = ({ category }) => {
 
       {/* No results message */}
       {display_list.filter(item => 
+        item && item.name &&
         (category === "All" || category === item.category) && 
-        item.name.toLowerCase().includes(search.toLowerCase())
+        item.name.toLowerCase().includes((search || "").toLowerCase())
       ).length === 0 && (
         <div className='text-center py-20'>
           <p className='text-gray-400 text-lg font-bold uppercase tracking-widest'>No dishes found matching your search.</p>

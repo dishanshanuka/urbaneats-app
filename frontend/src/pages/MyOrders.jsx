@@ -43,11 +43,14 @@ const MyOrders = () => {
                             <img src={url + "/images/" + order.items[0].image} alt="" className='w-full h-full object-cover rounded-2xl shadow-lg border-2 border-white' />
                         </div>
                         
-                        <p className='text-sm md:text-base font-black text-gray-800 uppercase leading-tight'>
-                            {order.items.map((item, i) => (
-                                i === order.items.length - 1 ? item.name + " x " + item.quantity : item.name + " x " + item.quantity + ", "
-                            ))}
-                        </p>
+                        {/* Fix: Order Names Section with Line Clamp and smaller text */}
+                        <div className='max-w-[280px]'>
+                            <p className='text-[11px] md:text-[12px] font-bold text-gray-800 uppercase leading-snug line-clamp-2'>
+                                {order.items.map((item, i) => (
+                                    i === order.items.length - 1 ? item.name + " x " + item.quantity : item.name + " x " + item.quantity + ", "
+                                ))}
+                            </p>
+                        </div>
                         
                         <p className='font-black text-gray-900 text-xl tracking-tighter'>
                             <span className='text-orange-600 text-[10px] mr-1 uppercase'>LKR</span>
@@ -74,7 +77,6 @@ const MyOrders = () => {
                             <button onClick={fetchOrders} className='bg-orange-600 text-white py-3 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-black transition-all'>
                                 Track Order
                             </button>
-                            {/* RATE ORDER BUTTON */}
                             {order.status.toLowerCase() === "delivered" && (
                                 <button onClick={() => { setSelectedOrder(order); setShowReviewModal(true); }} className='bg-white text-orange-600 border border-orange-600 py-3 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-orange-50 transition-all'>
                                     Rate Order
@@ -85,7 +87,6 @@ const MyOrders = () => {
                 ))}
             </div>
 
-            {/* REVIEW MODAL POPUP */}
             {showReviewModal && (
                 <ReviewModal order={selectedOrder} url={url} token={token} setShowReviewModal={setShowReviewModal} />
             )}

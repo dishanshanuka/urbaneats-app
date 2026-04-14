@@ -5,7 +5,9 @@ import { toast } from 'react-toastify';
 
 const ReviewModal = ({ order, url, token, setShowReviewModal }) => {
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  
+  const [comment, setComment] = useState("The food was absolutely delicious! Fast delivery and great service. Highly recommended! ");
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitReview = async () => {
@@ -74,6 +76,7 @@ const ReviewModal = ({ order, url, token, setShowReviewModal }) => {
         <textarea 
           className='w-full border-2 border-gray-100 p-6 rounded-[2rem] outline-none font-bold text-xs tracking-widest bg-gray-50/50 mb-8 h-40 transition-all focus:border-orange-500/20 focus:bg-white placeholder:text-gray-300 uppercase' 
           placeholder='How was the taste? share your thoughts...' 
+          value={comment}
           onChange={(e) => setComment(e.target.value)}
         ></textarea>
 
