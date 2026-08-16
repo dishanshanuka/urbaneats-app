@@ -9,10 +9,11 @@ const LoginPopup = ({ setShowLogin }) => {
   const { url, setToken } = useContext(StoreContext)
 
   const [currState, setCurrState] = useState("Login");
+  
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: ""
+    name: "Dishan Shanuka",
+    email: "dishanss123@gmail.com",
+    password: "dsdss12345678"
   });
 
   const onChangeHandler = (e) => {
@@ -38,12 +39,9 @@ const LoginPopup = ({ setShowLogin }) => {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         
-        
         toast.success(response.data.message); 
-        
         setShowLogin(false);
       } else {
-      
         toast.error(response.data.message);
       }
     } catch (error) {
@@ -77,6 +75,7 @@ const LoginPopup = ({ setShowLogin }) => {
               type="text" 
               placeholder='Your name' 
               required 
+              autoComplete="off"
             />
           )}
           <input 
@@ -87,6 +86,7 @@ const LoginPopup = ({ setShowLogin }) => {
             type="email" 
             placeholder='Your email' 
             required 
+            autoComplete="off"
           />
           <input 
             className='border border-gray-300 p-3 rounded-lg outline-orange-600 focus:border-orange-600 transition-all' 
@@ -96,6 +96,7 @@ const LoginPopup = ({ setShowLogin }) => {
             type="password" 
             placeholder='Password' 
             required 
+            autoComplete="current-password"
           />
         </div>
 
@@ -104,7 +105,7 @@ const LoginPopup = ({ setShowLogin }) => {
         </button>
 
         <div className='flex items-start gap-2 -mt-2'>
-          <input className='mt-1 cursor-pointer w-4 h-4 accent-orange-600' type="checkbox" required />
+          <input className='mt-1 cursor-pointer w-4 h-4 accent-orange-600' type="checkbox" required defaultChecked />
           <p className='text-xs leading-tight'>By continuing, I agree to the terms of use & privacy policy.</p>
         </div>
 

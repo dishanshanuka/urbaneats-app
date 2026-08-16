@@ -12,7 +12,7 @@ const Add = () => {
         name: "Greek Salad",
         description: "Fresh cucumbers, tomatoes, olives, and premium feta cheese.",
         price: "1200",
-        category: "Pure Veg"
+        category: "Salad"
     });
 
     const onChangeHandler = (event) => {
