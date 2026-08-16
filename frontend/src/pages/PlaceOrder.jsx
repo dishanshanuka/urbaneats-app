@@ -5,9 +5,17 @@ import axios from 'axios';
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext);
 
+  // වීඩියෝ එකේදී ලේසි වෙන්න Default Values ඇඩ් කළා
   const [data, setData] = useState({
-    firstName: "", lastName: "", email: "", street: "",
-    city: "", state: "", zipcode: "", country: "", phone: ""
+    firstName: "Dishan",
+    lastName: "Shanuka",
+    email: "ds1234@gmail.com",
+    street: "123 Road",
+    city: "Colombo",
+    state: "Western",
+    zipcode: "10107",
+    country: "Sri Lanka",
+    phone: "0712345678"
   })
 
   const onChangeHandler = (event) => {
@@ -22,7 +30,7 @@ const PlaceOrder = () => {
     let orderItems = [];
     food_list.map((item) => {
       if (cartItems[item._id] > 0) {
-        let itemInfo = item;
+        let itemInfo = { ...item }; // item එක කෙලින්ම ගන්නේ නැතුව copy එකක් ගත්තා safe වෙන්න
         itemInfo["quantity"] = cartItems[item._id];
         orderItems.push(itemInfo);
       }
@@ -62,24 +70,24 @@ const PlaceOrder = () => {
         
         <div className='flex flex-col gap-4'>
             <div className='flex flex-col sm:flex-row gap-4'>
-                <input required name='firstName' onChange={onChangeHandler} value={data.firstName} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='FIRST NAME' />
-                <input required name='lastName' onChange={onChangeHandler} value={data.lastName} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='LAST NAME' />
+                <input required name='firstName' onChange={onChangeHandler} value={data.firstName} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='FIRST NAME' />
+                <input required name='lastName' onChange={onChangeHandler} value={data.lastName} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='LAST NAME' />
             </div>
 
-            <input required name='email' onChange={onChangeHandler} value={data.email} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="email" placeholder='EMAIL ADDRESS' />
-            <input required name='street' onChange={onChangeHandler} value={data.street} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STREET' />
+            <input required name='email' onChange={onChangeHandler} value={data.email} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="email" placeholder='EMAIL ADDRESS' />
+            <input required name='street' onChange={onChangeHandler} value={data.street} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STREET' />
             
             <div className='flex flex-col sm:flex-row gap-4'>
-                <input required name='city' onChange={onChangeHandler} value={data.city} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='CITY' />
-                <input required name='state' onChange={onChangeHandler} value={data.state} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STATE / PROVINCE' />
+                <input required name='city' onChange={onChangeHandler} value={data.city} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='CITY' />
+                <input required name='state' onChange={onChangeHandler} value={data.state} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='STATE / PROVINCE' />
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4'>
-                <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='ZIP CODE' />
-                <input required name='country' onChange={onChangeHandler} value={data.country} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='COUNTRY' />
+                <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='ZIP CODE' />
+                <input required name='country' onChange={onChangeHandler} value={data.country} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='COUNTRY' />
             </div>
 
-            <input required name='phone' onChange={onChangeHandler} value={data.phone} className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='PHONE NUMBER' />
+            <input required name='phone' onChange={onChangeHandler} value={data.phone} autoComplete="off" className='w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-orange-500/30 transition-all font-bold text-xs tracking-widest bg-gray-50/50' type="text" placeholder='PHONE NUMBER' />
         </div>
       </div>
 
