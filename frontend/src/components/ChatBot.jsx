@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Bot, User, Sparkles } from 'lucide-react'; // icons නැත්නම් plain text/emojis දාන්න පුළුවන්
+import axios from 'axios';
+import { X, Send, Bot, Sparkles } from 'lucide-react';
 
 export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,32 +23,55 @@ export const ChatBot = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
+    const userText = input.trim();
     const userMessage = {
       id: Date.now(),
       sender: 'user',
-      text: input
+      text: userText
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
 
-    // Backend API connect කරනකම් mock response එකක්
-    setTimeout(() => {
+    try {
+      // Backend URL එක .env එකෙන් හෝ default localhost:5000 එකෙන් ගනියි
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
+      const response = await axios.post(`${backendUrl}/api/chat/message`, {
+        message: userText,
+        chatHistory: messages.slice(-5) // අවසන් මැසේජ් 5ක context එක යවයි
+      });
+
+      if (response.data?.success) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            sender: 'bot',
+            text: response.data.reply
+          }
+        ]);
+      } else {
+        throw new Error(response.data?.message || 'Failed response');
+      }
+    } catch (error) {
+      console.error('Chat API Error:', error);
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           sender: 'bot',
-          text: "I'm currently being integrated! Soon I'll recommend the best dishes for you. 🍔✨"
+          text: "Oops! Couldn't reach the food server. Please make sure the backend is running! 🍔⚡"
         }
       ]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -79,7 +103,7 @@ export const ChatBot = () => {
               <div>
                 <h3 className="font-semibold text-sm leading-tight">UrbanEats AI</h3>
                 <p className="text-[11px] text-orange-100 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span> Always Active
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span> Powered by Groq
                 </p>
               </div>
             </div>
@@ -106,7 +130,7 @@ export const ChatBot = () => {
                   </div>
                 )}
                 <div
-                  className={`max-w-[78%] px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm ${
+                  className={`max-w-[78%] px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm whitespace-pre-line ${
                     msg.sender === 'user'
                       ? 'bg-orange-500 text-white rounded-br-xs'
                       : 'bg-white border border-gray-100 text-gray-800 rounded-bl-xs'
@@ -134,13 +158,13 @@ export const ChatBot = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask for dishes, recommendations..."
+              placeholder="Ask for burgers, pizza, recommendations..."
               className="flex-1 px-3.5 py-2 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-orange-500 focus:bg-white transition-all"
             />
             <button
               type="submit"
-              disabled={!input.trim()}
-              className="p-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white rounded-xl transition-all"
+              disabled={!input.trim() || isTyping}
+              className="p-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white rounded-xl transition-all cursor-pointer"
             >
               <Send className="w-4 h-4" />
             </button>
